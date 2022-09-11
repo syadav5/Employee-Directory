@@ -13,7 +13,7 @@ import com.examples.employeedirectory.viewmodels.MainViewModel
  */
 class MainActivity : AppCompatActivity() {
 
-    lateinit var _binding: ActivityMainBinding
+    private lateinit var _binding: ActivityMainBinding
     private val viewModel: MainViewModel by lazy {
         MainViewModel()
     }
