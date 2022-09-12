@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Employee Directory</string>
+    <string name="error_message">Something went wrong while trying to load the data. Please try again later.</string>
+    <string name="no_data_found_error">No Data Found.</string>
 </resources>

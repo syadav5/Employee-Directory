@@ -1,48 +1,43 @@
 package com.examples.employeedirectory.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.examples.employeedirectory.Employee
+import androidx.lifecycle.*
+import com.examples.employeedirectory.data.Employee
+import com.examples.employeedirectory.service.EmployeeService
+import com.examples.employeedirectory.service.Resource
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import java.util.*
 
 /**
  * View Model for Main Activity screen.
  */
-class MainViewModel : ViewModel() {
-    private val _employeesListLiveData: MutableLiveData<List<Employee>?> = MutableLiveData(null)
-    val employeeListLiveData: LiveData<List<Employee>?> = _employeesListLiveData
-    private val sampleList = listOf(
-        Employee(
-            "abc",
-            "Joseph",
-            "222",
-            "abc@xyz.com",
-            team = "Point Of sale",
-            photo_url_small = "",
-            photo_url_large = ""
-        ),
-        Employee(
-            "abc",
-            "Joseph",
-            "222",
-            "abc@xyz.com",
-            team = "Point Of sale",
-            photo_url_small = "",
-            photo_url_large = ""
-        ),
-        Employee(
-            "abc",
-            "Joseph",
-            "2422",
-            "abc@xyz.com",
-            team = "Point Of sale",
-            photo_url_small = "",
-            photo_url_large = ""
-        )
-    )
+class MainViewModel(private val employeeService: EmployeeService) : ViewModel() {
+    private val _employeesListLiveData: MutableLiveData<Resource<List<Employee>?>?> = MutableLiveData(null)
+    val employeeListLiveData: LiveData<Resource<List<Employee>?>?> = _employeesListLiveData
 
-    fun retrieveEmployeeList() {
-        // Fetcht the list from the service and update the live data with it.
-        _employeesListLiveData.postValue(sampleList)
+    /**
+     * This method makes service call and retrieves the employees list.
+     */
+    fun retrieveEmployeeList(forceRefresh:Boolean = false) {
+        // Fetch the list from the service and update the live data with it.
+        if (_employeesListLiveData.value == null || forceRefresh) {
+            _employeesListLiveData.postValue(Resource.Loading())
+            viewModelScope.launch {
+                val response = employeeService.getEmployees()
+                _employeesListLiveData.postValue(response)
+            }
+        }
+    }
+}
+
+class MainViewModelFactory constructor(private val service: EmployeeService):
+    ViewModelProvider.Factory {
+
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        return if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
+            MainViewModel(employeeService = service) as T
+        } else {
+            throw IllegalArgumentException("ViewModel Not Found")
+        }
     }
 }

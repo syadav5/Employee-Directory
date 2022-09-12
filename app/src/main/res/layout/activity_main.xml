@@ -26,7 +26,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="gone"
+        tools:visibility="visible"
         android:id="@+id/emptyView"
         tools:ignore="UseCompoundDrawables">
         <ImageView
@@ -45,12 +45,22 @@
             android:textSize="15sp"
             tools:text="Sorry there is no data to display."
             />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/reloadButton"
+            android:gravity="center"
+            android:padding="8dp"
+            android:layout_marginTop="16dp"
+            android:textSize="15sp"
+            tools:text="Retry."
+            />
     </LinearLayout>
     <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/progress_ind"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
