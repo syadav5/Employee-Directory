@@ -5,6 +5,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
+/**
+ * View Holder For Employee List Recycler View.
+ */
 class EmployeeListViewHolder(itemView:View):RecyclerView.ViewHolder(itemView) {
 
     val name:TextView = itemView.findViewById(R.id.empName)
