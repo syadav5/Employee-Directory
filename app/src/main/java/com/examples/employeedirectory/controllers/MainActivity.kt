@@ -99,6 +99,10 @@ class MainActivity : AppCompatActivity() {
                     false)
             setHasFixedSize(true)
         }
+        _binding.pullRefreshLayout.setOnRefreshListener {
+            viewModel.retrieveEmployeeList(true)
+            _binding.pullRefreshLayout.isRefreshing = false
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
