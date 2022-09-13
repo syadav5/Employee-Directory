@@ -48,7 +48,12 @@ class MainActivity : AppCompatActivity() {
                     _binding.progressInd.visibility = View.GONE
                     it.data?.let {
                         if (it.isNotEmpty()) {
-                            refreshList(it.sortedWith(naturalOrder()))
+                            refreshList(
+                                viewModel.getSortedList(
+                                    it,
+                                    MainViewModel.SORT_ORDER_NAME_ASC
+                                )
+                            )
                         } else {
                             showEmptyView()
                         }
@@ -94,9 +99,11 @@ class MainActivity : AppCompatActivity() {
         _binding.empList.apply {
             adapter = EmployeeListAdapter(listOf())
             layoutManager =
-                LinearLayoutManager(this@MainActivity,
+                LinearLayoutManager(
+                    this@MainActivity,
                     RecyclerView.VERTICAL,
-                    false)
+                    false
+                )
             setHasFixedSize(true)
         }
         _binding.pullRefreshLayout.setOnRefreshListener {
