@@ -33,10 +33,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(_binding.root)
         setupRecyclerView()
         setupObservers()
-    }
-
-    override fun onResume() {
-        super.onResume()
         viewModel.retrieveEmployeeList()
     }
 
